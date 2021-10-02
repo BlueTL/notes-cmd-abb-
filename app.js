@@ -34,15 +34,23 @@ if (argv[2] == 'add') {
             console.log(error)
         }
         todos = JSON.parse(data)
-        todos.push(argv[3])
-        let todoString = JSON.stringify(todos)
+        
+        const found = todos.find(element => element == argv[3])
+        if(found!= undefined) {
+            console.log(chalk.redBright('error: found "' + argv[3] + '" todos'))
 
-        fs.writeFile("todos.txt", todoString, function (error) {
-            if (error) {
-                console.log(error)
-            }
-            console.log('saved')
-        })
+        } else{
+            todos.push(argv[3])
+            let todoString = JSON.stringify(todos)
+            fs.writeFile("todos.txt", todoString, function (error) {
+                if (error) {
+                    console.log(error)
+                }
+                console.log('saved')
+            })
+        }
+
+        
     })
 
 } else if (argv[2] == 'delete') {
